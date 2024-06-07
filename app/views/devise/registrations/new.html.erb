@@ -110,11 +110,14 @@
       if (!/[a-z]/.test(password)) {
         actions.push("Utilizar al menos una minúscula.");
       }
+      if (!/[0-9]/.test(password)) {
+        actions.push("Utilizar al menos un número.");
+      }
       if (!/[^a-zA-Z\d]/.test(password)) {
         actions.push("Utilizar al menos un carácter especial (que no sea letra ni número).");
       }
       // Validación para evitar números consecutivos
-      if (/(\d)\1\1|012|123|234|345|456|567|678|789/.test(password)) {
+      if (/(\d)\1\1|012|123|234|345|456|567|678|789|890|901|098|987|876|765|654|543|432|321|210|109/.test(password)) {
           actions.push("No permitir números consecutivos.");
       }
 
