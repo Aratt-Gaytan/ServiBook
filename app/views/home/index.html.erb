@@ -1,0 +1,15 @@
+<%= stylesheet_link_tag 'home' %>
+
+<% if user_signed_in? %> 
+    <p>Welcome, 
+        <%= current_user.email %>!
+        <%= current_user.name %>
+        <%= current_user.phone %>
+        <%= current_user.address %>
+    </p> 
+    
+    <%= link_to "Cerrar sesión", destroy_user_session_path, method: :delete %>
+
+ <% else %> 
+    <%= link_to "Sign in", new_user_session_path %>
+<% end %>
