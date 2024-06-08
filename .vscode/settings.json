@@ -1,0 +1,12 @@
+{
+    "sqltools.useNodeRuntime": true,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "hola",
+            "group": "hola",
+            "database": "${workspaceFolder:servibook}/storage/development.sqlite3"
+        }
+    ]
+}

@@ -126,7 +126,7 @@
           actions.push("No permitir letras consecutivas.");
       }
 
-      if (password != passwordConfirmation.value) {
+      if (checkPass(password, passwordConfirmation.value)) {
         actions.push("Las contraseñas deben coincidir");
       }
 
@@ -140,5 +140,35 @@
         passwordStrength.innerHTML = '';
       }
     });
+
+     passwordConfirmation.addEventListener('input', function() {
+        const passwordConfirm = this.value;
+        const password = passwordField.value;
+        const actions = [];
+        if (checkPass(password, passwordConfirmation.value)) {
+          actions.push("Las contraseñas deben coincidir");
+        }
+
+        // Mostrar las acciones que faltan realizar en la contraseña
+        if (actions.length > 0) {
+          passwordStrength.innerHTML = actions.map(action => `<p class="text-danger">${action}</p>`).join('');
+          enablebutton.disabled = true;
+
+        } else {
+          enablebutton.disabled = false;
+          passwordStrength.innerHTML = '';
+        }
+     });
+
+    function checkPass(pass, confirmPass){
+      if (pass != confirmPass) {
+        console.log(`no ${pass} ${confirmPass}`);
+        return 1
+      }
+      else{
+        return 0
+      }
+    }
+
   });
 </script>
