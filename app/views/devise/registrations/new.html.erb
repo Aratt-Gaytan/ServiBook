@@ -4,6 +4,8 @@
 
 <div class="row">
   <div class="col-12 text-center mt-3">
+    <%= render "devise/shared/error_messages", resource: resource %>
+
   <%= image_tag "logo.png", alt: "My Logo", class: "logo", width: "100", height: "100" %>
 
     <h2>Sign up</h2>
@@ -11,8 +13,7 @@
 
 
 
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-    <%= render "devise/shared/error_messages", resource: resource %>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), autocomplete: "off"  ) do |f| %>
 
     <div class="row">
       <div class="col">
@@ -21,38 +22,43 @@
           <p><%= f.text_field :name, autofocus: true, autocomplete: "name" , class: "form-control" %></p>
         </div>
 
+    
         <div class="field">
           <p><%= f.label :email , class: "form-label" %></p>
           <p><%= f.email_field :email, autofocus: true, autocomplete: "email" , class: "form-control" %></p>
         </div>
-
+        
+        <div class="field">
+          <p><%= f.label :password , class: "form-label" %></p>
+          <p><%= f.password_field :password, autocomplete: "new-password" , class: "form-control" %></p>
+        </div>
       </div>
+
       <div class="col">
 
-        <div class="field">
+            <div class="field">
+          <p><%= f.label :address , class: "form-label" %></p>
+          <p><%= f.text_field :address, autofocus: true, autocomplete: "address" , class: "form-control" %></p>
+        </div>
+       <div class="field">
           <p><%= f.label :phone , class: "form-label" %></p>
           <p><%= f.phone_field :phone, autofocus: true, autocomplete: "phone" , class: "form-control" %></p>
         </div>
 
         <div class="field">
-          <p><%= f.label :address , class: "form-label" %></p>
-          <p><%= f.text_field :address, autofocus: true, autocomplete: "address" , class: "form-control" %></p>
-        </div>
-      </div>
-      <div class="col">
-
-        <div class="field">
-          <p><%= f.label :password , class: "form-label" %></p>
-          <p><%= f.password_field :password, autocomplete: "new-password" , class: "form-control" %></p>
-        </div>
-
-        <div class="field">
           <p><%= f.label :password_confirmation , class: "form-label" %></p>
-          <p><%= f.password_field :password_confirmation, autocomplete: "new-password" , class: "form-control" %></p>
-          <div id="passwordHelpInline" class="form-text"></div> <!-- Contenedor para mostrar las acciones que faltan realizar en la contraseña -->
-
+          <p><%= f.password_field :password_confirmation, autocomplete: "new-password" , class: "form-control"%></p>
+          
         </div>
       </div>
+      </div>
+    <div class="row">
+      <div class="col">
+        <div id="passwordHelpInline" class="form-text bg-secondary rounded p-3" hidden = true>
+
+          </div>
+      </div>
+    </div>
     <div class="row">
       <div class="col text-center">
         <div class="actions">
@@ -69,6 +75,7 @@
 </div>
 
 </div>
+
 
 <script>
 
@@ -102,40 +109,44 @@
 
       // Verificar la fortaleza de la contraseña
       if (password.length < 8) {
-        actions.push("Utilizar al menos 8 caracteres.");
+        actions.push("More than 8 charecters.");
       }
       if (!/[A-Z]/.test(password)) {
-        actions.push("Utilizar al menos una mayúscula.");
+        actions.push('More than 1 mayus.');
       }
       if (!/[a-z]/.test(password)) {
-        actions.push("Utilizar al menos una minúscula.");
+        actions.push(' More than 1 minus.');
       }
       if (!/[0-9]/.test(password)) {
-        actions.push("Utilizar al menos un número.");
+        actions.push('More than 1 num.');
       }
       if (!/[^a-zA-Z\d]/.test(password)) {
-        actions.push("Utilizar al menos un carácter especial (que no sea letra ni número).");
+        actions.push('More than 1 special character (not letters or numbers).');
       }
       // Validación para evitar números consecutivos
       if (/(\d)\1\1|012|123|234|345|456|567|678|789|890|901|098|987|876|765|654|543|432|321|210|109/.test(password)) {
-          actions.push("No permitir números consecutivos.");
+          actions.push('No consecutive numbers.');
       }
 
       // Validación para evitar letras consecutivas
       if (/(abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz|ABC|BCD|CDE|DEF|EFG|FGH|GHI|HIJ|IJK|JKL|KLM|LMN|MNO|NOP|OPQ|PQR|QRS|RST|STU|TUV|UVW|VWX|WXY|XYZ)/.test(password)) {
-          actions.push("No permitir letras consecutivas.");
+          actions.push('No consecutive letters.');
       }
 
       if (checkPass(password, passwordConfirmation.value)) {
-        actions.push("Las contraseñas deben coincidir");
+        actions.push('Passwords must match');
       }
 
       // Mostrar las acciones que faltan realizar en la contraseña
       if (actions.length > 0) {
-        passwordStrength.innerHTML = actions.map(action => `<p class="text-danger">${action}</p>`).join('');
-        enablebutton.disabled = true;
+         passwordStrength.hidden = false;
 
-      } else {
+        passwordStrength.innerHTML = actions.map(action => `<p class="text-danger">${action}</p>`).join('');
+
+        enablebutton.disabled = true;
+      }else {
+        passwordStrength.hidden = true;
+
         enablebutton.disabled = false;
         passwordStrength.innerHTML = '';
       }
@@ -146,15 +157,21 @@
         const password = passwordField.value;
         const actions = [];
         if (checkPass(password, passwordConfirmation.value)) {
-          actions.push("Las contraseñas deben coincidir");
+          actions.push('Passwords must match');
         }
 
         // Mostrar las acciones que faltan realizar en la contraseña
         if (actions.length > 0) {
+          passwordStrength.hidden = false;
+          
           passwordStrength.innerHTML = actions.map(action => `<p class="text-danger">${action}</p>`).join('');
+        
+
+          //passwordStrength.innerHTML = actions.map(action => `<p class="text-danger">${action}</p>`).join('');
           enablebutton.disabled = true;
 
         } else {
+          passwordStrength.hidden = true;
           enablebutton.disabled = false;
           passwordStrength.innerHTML = '';
         }
