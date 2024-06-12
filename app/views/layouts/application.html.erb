@@ -17,9 +17,33 @@
   </head>
 
   <body>
-   
-    <p class="notice"><%= notice %></p> <p class="alert"><%= alert %></p>
+    
+    <% if notice || alert  %>
+    
+      <div class="alert alert-info alert-dismissible fade show fixed-top alert-sm " id="myAlert" role="alert">
+        <h4 class="alert-heading notice">
+          <%= notice %>
+        </h4>
+        <p class="">
+          <%= alert %>
+        </p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+        
+    <% end %>
+  
     <%= yield %>
+
+    <script>
+    const alert = bootstrap.Alert.getOrCreateInstance('#myAlert');
+    setTimeout(
+      function(){
+
+      alert.close();
+      }
+      
+      , 2000);
+      </script>
 
   </body>
 </html>

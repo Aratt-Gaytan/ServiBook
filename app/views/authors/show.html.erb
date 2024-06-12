@@ -1,0 +1,12 @@
+<h1><%= "#{@author.first_name} #{@author.last_name}" %></h1>
+
+<ul>
+    <li>
+        <%= @author.nationality%>
+    </li>
+    <li>
+        <%= @author.date_of_birth%>
+
+    </li>
+</ul>
+<%= button_to 'Remove', author_path(@author), method: 'delete', data: { confirm: 'Are you sure?' } %>

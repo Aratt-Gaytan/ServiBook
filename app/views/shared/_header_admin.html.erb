@@ -1,0 +1,35 @@
+<nav class="navbar bg-body-tertiary fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+        <%= image_tag 'logo.png' , class: "logo", width: "50", height: "50" %>
+        <strong class="servi">
+        Servi
+        </strong>
+        <strong class="book">
+        Books
+        </strong>
+    </a>
+
+    <ul class="nav justify-content-end">
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Active</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                <%= current_user.name%>
+            </a>
+            <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/users/edit">Profile</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><%= link_to "Sign out", destroy_user_session_path, method: :delete , class: "dropdown-item"%></li>
+            </ul>
+        </li>
+    </ul>
+  </div>
+</nav>

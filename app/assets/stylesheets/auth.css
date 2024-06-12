@@ -4,6 +4,19 @@ body{
 
 .container-md{
     background-color: rgba(172, 216, 216,0.6);
+    margin-top: 3rem;
+}
+
+.alert-sm{
+    width: 25%;
+    justify-self: end;
+
+}
+
+.alert{
+    width: 40%;
+    justify-self: end;
+
 }
 
 

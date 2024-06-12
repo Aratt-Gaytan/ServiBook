@@ -1,10 +1,10 @@
 <%= stylesheet_link_tag 'auth' %>
 
+<%= render "devise/shared/error_messages", resource: resource %>
 <div class="container-md d-flex justify-content-center rounded">
 
 <div class="row">
   <div class="col-12 text-center mt-3">
-    <%= render "devise/shared/error_messages", resource: resource %>
 
   <%= image_tag "logo.png", alt: "My Logo", class: "logo", width: "100", height: "100" %>
 
