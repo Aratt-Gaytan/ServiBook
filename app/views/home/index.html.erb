@@ -1,7 +1,7 @@
 <%= stylesheet_link_tag 'home' %>
 
-<%= render 'shared/header_admin' if user_signed_in? && current_user.role == 1  %>
-<%= render 'shared/principal_page' if user_signed_in? && current_user.role == 1  %>
+<%= render 'shared/header_admin' if user_signed_in? && current_user.role_id == 1  %>
+<%= render 'shared/principal_page' if user_signed_in? && current_user.role_id == 1  %>
 
 
 

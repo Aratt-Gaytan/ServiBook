@@ -1,4 +1,4 @@
-<nav class="navbar bg-body-tertiary fixed-top">
+<nav class="navbar bg-body-tertiary d-flex">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">
         <%= image_tag 'logo.png' , class: "logo", width: "50", height: "50" %>
@@ -18,7 +18,7 @@
             <a class="nav-link" href="#">Link</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <li><%= link_to "Authors", authors_path , class: "nav-link active"%></li>
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">

@@ -1,0 +1,13 @@
+    <%= link_to "Back to authors", authors_path  %>
+
+<h3>Create an Author</h3>
+<%= form_with model: @author do |form| %>
+  <%= form.file_field :photo%>
+  <%= form.text_field :first_name, placeholder: "First Name" %>
+  <%= form.text_field :last_name, placeholder: "Last Name" %>
+  <%= form.text_field :nationality, placeholder: "Nationality" %>
+  <%= form.date_field :date_of_birth, placeholder: "Date of Birth" %>
+  <%= form.date_field :date_of_death, placeholder: "Date of death" %>
+  <%= form.text_area :biography,  class: "ckeditor" %>
+  <%= form.submit %>
+<% end %>

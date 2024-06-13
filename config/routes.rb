@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount Ckeditor::Engine => '/ckeditor'
   get 'author/index'
   get 'author/show'
   get 'author/new'

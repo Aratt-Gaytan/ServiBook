@@ -1,7 +1,14 @@
+<%= render 'shared/header_admin' if user_signed_in? && current_user.role_id == 1  %>
+    <li><%= link_to "New Author", new_author_path  %></li>
+
 <h1>Authors</h1>
 
 <ul>
   <% @authors.each do |author| %>
-    <li><%= link_to "#{author.first_name} #{author.last_name}", author_path(author)  %></li>
+
+    <li>
+    <%= image_tag(author.photo, width: "100") if author.photo.attached? %>
+      <%= link_to "#{author.first_name} #{author.last_name}", author_path(author)  %>
+      </li>
   <% end %>
 </ul>

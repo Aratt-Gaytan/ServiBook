@@ -44,7 +44,7 @@ class AuthorsController < ApplicationController
 
   private
   def author_params
-    params.require(:author).permit(:first_name, :last_name, :date_of_birth, :nationality)
+    params.require(:author).permit(:first_name, :last_name, :date_of_birth, :nationality, :photo, :biography, :date_of_death)
   end
 
   def find_one

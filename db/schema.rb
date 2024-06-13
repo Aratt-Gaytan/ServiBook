@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_12_015059) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_12_232519) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -46,6 +46,25 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_12_015059) do
     t.string "nationality"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "biography"
+    t.string "date_of_death"
+  end
+
+  create_table "ckeditor_assets", force: :cascade do |t|
+    t.string "data_file_name", null: false
+    t.string "data_content_type"
+    t.integer "data_file_size"
+    t.string "data_fingerprint"
+    t.string "type", limit: 30
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["type"], name: "index_ckeditor_assets_on_type"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -59,11 +78,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_12_015059) do
     t.string "name"
     t.string "phone"
     t.string "address"
-    t.integer "role", default: 0
+    t.integer "role_id", default: 2
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["role_id"], name: "index_users_on_role_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "users", "roles"
 end

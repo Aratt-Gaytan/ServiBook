@@ -1,3 +1,7 @@
+<%= render 'shared/header_admin' if user_signed_in? && current_user.role_id == 1  %>
+
+<%= image_tag @author.photo if @author.photo.attached?%>
+
 <h1><%= "#{@author.first_name} #{@author.last_name}" %></h1>
 
 <ul>
@@ -5,8 +9,14 @@
         <%= @author.nationality%>
     </li>
     <li>
-        <%= @author.date_of_birth%>
+        <%= "(#{@author.date_of_birth} -   #{@author.date_of_death.present? ? @author.date_of_death : 'now'})"%>
+
+    </li>
+     <li>
+        <%= @author.biography%>
 
     </li>
 </ul>
 <%= button_to 'Remove', author_path(@author), method: 'delete', data: { confirm: 'Are you sure?' } %>
+<%= link_to 'Back', authors_path %>
+<%= link_to 'Edit', edit_author_path %>

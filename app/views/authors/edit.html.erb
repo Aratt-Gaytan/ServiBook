@@ -1,8 +1,2 @@
-<h3>Create an Author</h3>
-<%= form_with model: @author do |form| %>
-  <%= form.text_field :first_name, placeholder: "First Name" %>
-  <%= form.text_field :last_name, placeholder: "Last Name" %>
-  <%= form.text_field :nationality, placeholder: "Nationality" %>
-  <%= form.date_field :date_of_birth, placeholder: "Date of Birth" %>
-  <%= form.submit %>
-<% end %>
+<%= render 'shared/header_admin' if user_signed_in? && current_user.role_id == 1  %>
+<%= render 'shared/authors/form' if user_signed_in? && current_user.role_id == 1  %>
