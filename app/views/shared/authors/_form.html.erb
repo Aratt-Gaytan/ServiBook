@@ -1,13 +1,101 @@
-    <%= link_to "Back to authors", authors_path  %>
 
-<h3>Create an Author</h3>
-<%= form_with model: @author do |form| %>
-  <%= form.file_field :photo%>
-  <%= form.text_field :first_name, placeholder: "First Name" %>
-  <%= form.text_field :last_name, placeholder: "Last Name" %>
-  <%= form.text_field :nationality, placeholder: "Nationality" %>
-  <%= form.date_field :date_of_birth, placeholder: "Date of Birth" %>
-  <%= form.date_field :date_of_death, placeholder: "Date of death" %>
-  <%= form.text_area :biography,  class: "ckeditor" %>
-  <%= form.submit %>
-<% end %>
+<div class="container p-3">
+  <%= form_with model: @author do |form| %>
+    <div class="row text-center align-items-center ">
+      <div class="col-5">
+        <div class="input-group mb-3 ">
+          <%= form.file_field :photo, class: 'form-control', id:'photo_input'%>
+          <%= form.label :photo , class: "form-label", class: 'input-group-text' %>
+
+        </div>
+  
+      </div>
+      
+      <div class="col">
+        <strong>
+
+          <%= form.label 'Image: ' , class: "form-label"%>
+        </strong>
+
+        <div id="image_preview">
+           <% if @author.photo.attached? %>
+              <div>
+                <%= image_tag @author.photo, class: "img-thumbnail", width: '200px' %>
+              </div>
+            <% end %>
+        </div>
+     
+
+      </div>
+    </div>
+    <div class="row p-3">
+
+      <div class="col">
+          <strong>
+            <%= form.label 'Complete name', class: "form-label" %>
+          </strong>
+          
+
+            <p>First name: <%= form.text_field :first_name, placeholder: "First Name", class: 'form-control' %></p>
+            <p>Last name<%= form.text_field :last_name, placeholder: "Last Name", class: 'form-control' %></p>
+        
+          
+      </div>
+      <div class="col">
+        <strong>
+          <%= form.label :nationality, class: "form-label" %>
+        </strong>
+        
+        <p><br><%= form.text_field :nationality, placeholder: "Nationality" , class: 'form-control'%></p>
+      </div>
+      <div class="col">
+        <strong>
+          <%= form.label 'Date of:', class: "form-label" %>
+        </strong>
+
+        <p>Birth: <%= form.date_field :date_of_birth, placeholder: "Date of Birth" , class: 'form-control' %></p>
+        <p>Death (if still alive leave blank): <%= form.date_field :date_of_death, placeholder: "Date of death" , class: 'form-control' %></p>
+      </div>
+      
+    </div>
+
+    <div class="row">
+
+      <div class="col">
+        
+        <%= form.text_area :biography,  class: "ckeditor form-control", rows: '5'  %>
+      </div>
+    </div>
+    <div class="row pt-5">
+
+      <div class="col text-center">
+        <%= form.submit "Update author" , class: "btn btn-dark mb-3" %>
+        
+      </div>
+    </div>
+
+
+  <% end %>
+</div>
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const photoInput = document.getElementById('photo_input');
+  const imagePreview = document.getElementById('image_preview');
+
+  photoInput.addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+      const imageUrl = event.target.result;
+      imagePreview.innerHTML = `<img src="${imageUrl}" class="img-thumbnail"  width='200px' />`;
+    };
+
+    reader.readAsDataURL(file);
+  });
+});
+</script>

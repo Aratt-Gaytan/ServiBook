@@ -7,4 +7,9 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :phone, :address])
     devise_parameter_sanitizer.permit(:account_update, keys: [:name, :phone , :address])
   end
+  def check_user_role
+    unless current_user.role_id == 1
+      render file: "#{Rails.root}/public/422.html", status: :unprocessable_entity
+    end
+  end
 end

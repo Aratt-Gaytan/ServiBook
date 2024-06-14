@@ -1,22 +1,29 @@
 <%= render 'shared/header_admin' if user_signed_in? && current_user.role_id == 1  %>
 
-<%= image_tag @author.photo if @author.photo.attached?%>
+<%=  link_to 'Back', authors_path, class: 'btn btn-outline-primary m-3 bi bi-arrow-90deg-left' %>
+<div class="container rounded p-2 ">
+    <div class="row  ">
+        <div class="col-1 offset-1 m-3 ">
+            <%= image_tag(@author.photo, class: 'rounded', width: '200px') if @author.photo.attached?%>
+        </div>
+        <div class="col-8 offset-1">
 
-<h1><%= "#{@author.first_name} #{@author.last_name}" %></h1>
+            <h1>
+                <%= "#{@author.first_name} #{@author.last_name}" %>
+                <%= "(#{@author.date_of_birth.year} -   #{@author.date_of_death.present? ? @author.date_of_death.year : 'now'})"%> 
+            </h1>
 
-<ul>
-    <li>
-        <%= @author.nationality%>
-    </li>
-    <li>
-        <%= "(#{@author.date_of_birth} -   #{@author.date_of_death.present? ? @author.date_of_death : 'now'})"%>
+            <p>
+                <%= @author.nationality%>
+            </p>
+            <p>
+                <%= @author.biography%>
+            </p>
 
-    </li>
-     <li>
-        <%= @author.biography%>
+            <%= button_to 'Remove', author_path(@author), method: 'delete',class: 'btn btn-outline-danger', data: { confirm: 'Are you sure?' } if current_user.role_id == 1 %>
 
-    </li>
-</ul>
-<%= button_to 'Remove', author_path(@author), method: 'delete', data: { confirm: 'Are you sure?' } %>
-<%= link_to 'Back', authors_path %>
-<%= link_to 'Edit', edit_author_path %>
+            <%= link_to 'Edit', edit_author_path, class:'btn btn-outline-primary mt-3' if current_user.role_id == 1%>
+        </div>
+    </div>
+</div>
+

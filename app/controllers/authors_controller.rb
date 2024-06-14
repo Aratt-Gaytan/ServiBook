@@ -1,6 +1,7 @@
 class AuthorsController < ApplicationController
   before_action :find_one, only: [:show, :edit, :update, :destroy] # this allows to add  find_one in the beginning of the methods mentioned
   before_action :authenticate_user!
+  before_action :check_user_role, only: [:edit, :update, :new]
 
   def index
     @authors = Author.all
@@ -9,6 +10,8 @@ class AuthorsController < ApplicationController
   def show
     @author = Author.find(params[:id])
   end
+
+
 
   def new
     @author = Author.new
@@ -50,6 +53,7 @@ class AuthorsController < ApplicationController
   def find_one
     @author = Author.find(params[:id])
   end
+
 
 
 

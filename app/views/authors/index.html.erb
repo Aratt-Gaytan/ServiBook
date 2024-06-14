@@ -1,14 +1,28 @@
 <%= render 'shared/header_admin' if user_signed_in? && current_user.role_id == 1  %>
-    <li><%= link_to "New Author", new_author_path  %></li>
+<%= link_to "New Author", new_author_path, class: 'btn btn-outline-primary m-3 bi bi-plus-lg' if current_user.role_id == 1%>
 
-<h1>Authors</h1>
+<h1 class="text-center">Authors</h1>
+<div class="container p-4">
+  <div class="row">
 
-<ul>
   <% @authors.each do |author| %>
-
-    <li>
-    <%= image_tag(author.photo, width: "100") if author.photo.attached? %>
-      <%= link_to "#{author.first_name} #{author.last_name}", author_path(author)  %>
-      </li>
+    <div class="col">
+      <div class="card" style="width: 9rem;">
+          
+          <% if author.photo.attached? %>
+            <%= image_tag(author.photo,  class: 'card-img-top')  %>
+          <% else %>
+            <%= image_tag 'default.jpg', class: 'card-img-top' %>
+          <% end %>
+          
+        <div class="card-body">
+          <%= link_to "#{author.first_name} #{author.last_name}", author_path(author) ,class: 'card-text' %>
+        </div>
+      </div>
+    </div>
+    
+     
   <% end %>
-</ul>
+
+  </div>
+</div>
