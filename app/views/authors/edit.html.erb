@@ -1,6 +1,11 @@
-<%= render 'shared/header_admin' if user_signed_in? && current_user.role_id == 1  %>
-    <%= link_to "Back to authors", authors_path, class:'btn btn-outline-primary m-3 bi bi-arrow-90deg-left'  %>
+<%= render 'shared/header_admin' if user_signed_in?  %>
 
-<h3 class="text-center">Edit <%= "#{@author.first_name} #{@author.last_name}"%></h3>
 
-<%= render 'shared/authors/form' if user_signed_in? && current_user.role_id == 1  %>
+    <%= link_to "Back to authors", authors_path, class:'btn btn-light m-3 bi bi-arrow-90deg-left text-dark'  %>
+
+<div class="container rounded">
+
+    <h3 class="text-center">Edit <%= "#{@author.first_name} #{@author.last_name}"%></h3>
+
+    <%= render 'shared/authors/form' if user_signed_in? && current_user.role_id == 1  %>
+</div>

@@ -1,6 +1,6 @@
 
 <div class=" p-3">
-  <%= form_with model: @author do |form| %>
+  <%= form_with model: @genre do |form| %>
     <div class="row text-center align-items-center ">
       <div class="col-5">
         <div class="input-group mb-3 ">
@@ -18,9 +18,9 @@
         </strong>
 
         <div id="image_preview">
-           <% if @author.photo.attached? %>
+           <% if @genre.photo.attached? %>
               <div>
-                <%= image_tag @author.photo, class: "img-thumbnail", width: '200px' %>
+                <%= image_tag @genre.photo, class: "img-thumbnail", width: '200px' %>
               </div>
             <% end %>
         </div>
@@ -32,38 +32,23 @@
 
       <div class="col">
           <strong>
-            <%= form.label 'Complete name', class: "form-label" %>
+            <%= form.label :name, class: "form-label" %>
           </strong>
           
 
-            <p>First name: <%= form.text_field :first_name, placeholder: "First Name", class: 'form-control' %></p>
-            <p>Last name<%= form.text_field :last_name, placeholder: "Last Name", class: 'form-control' %></p>
+            <p> <br> <%= form.text_field :name, placeholder: "Name", class: 'form-control' %></p>
         
           
       </div>
-      <div class="col">
-        <strong>
-          <%= form.label :nationality, class: "form-label" %>
-        </strong>
-        
-        <p><br><%= form.text_field :nationality, placeholder: "Nationality" , class: 'form-control'%></p>
-      </div>
-      <div class="col">
-        <strong>
-          <%= form.label 'Date of:', class: "form-label" %>
-        </strong>
-
-        <p>Birth: <%= form.date_field :date_of_birth, placeholder: "Date of Birth" , class: 'form-control' %></p>
-        <p>Death (if still alive leave blank): <%= form.date_field :date_of_death, placeholder: "Date of death" , class: 'form-control' %></p>
-      </div>
-      
     </div>
-
     <div class="row">
 
       <div class="col">
-        
-        <%= form.text_area :biography,  class: "ckeditor form-control", rows: '5' , placeholder: 'Description' %>
+        <strong>
+            <%= form.label :description, class: "form-label" %>
+          </strong>
+          
+        <%= form.text_area :description,  class: "ckeditor form-control", rows: '5', placeholder: 'Description' %>
       </div>
     </div>
     <div class="row pt-5">

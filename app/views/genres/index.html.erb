@@ -1,0 +1,29 @@
+<%= render 'shared/header_admin' if user_signed_in?   %>
+
+<%= link_to "New genre", new_genre_path, class: 'btn btn-light m-3 bi bi-arrow-90deg-left text-dark' if current_user.role_id == 1%>
+
+<div class="container p-4 mt-4">
+  <h1 class="text-center">Genres</h1>
+  <div class="row">
+
+  <% @genres.each do |genre| %>
+    <div class="col">
+      <div class="card" style="width: 9rem;">
+          
+          <% if genre.photo.attached? %>
+            <%= image_tag(genre.photo,  class: 'card-img-top')  %>
+          <% else %>
+            <%= image_tag 'default.jpg', class: 'card-img-top' %>
+          <% end %>
+          
+        <div class="card-body">
+          <%= link_to "#{genre.name} ", genre_path(genre) ,class: 'card-text' %>
+        </div>
+      </div>
+    </div>
+    
+     
+  <% end %>
+
+  </div>
+</div>

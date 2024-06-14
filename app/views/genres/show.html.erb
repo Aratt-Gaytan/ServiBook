@@ -1,0 +1,27 @@
+<%= render 'shared/header_admin' if user_signed_in?   %>
+
+<%=  link_to 'Back', genres_path, class: 'btn btn-light m-3 bi bi-arrow-90deg-left text-dark' %>
+<div class="container rounded p-2 ">
+    <div class="row  ">
+        <div class="col-1 offset-1 m-3 ">
+            <%= image_tag(@genre.photo, class: 'rounded', width: '200px') if @genre.photo.attached?%>
+        </div>
+        <div class="col-8 offset-1">
+
+            <h1>
+                <%= "#{@genre.name} " %>
+             
+            </h1>
+
+            <p>
+                <%= @genre.description%>
+            </p>
+
+
+            <%= button_to 'Remove', genre_path(@genre), method: 'delete',class: 'btn btn-outline-danger', data: { confirm: 'Are you sure?' } if current_user.role_id == 1 %>
+
+            <%= link_to 'Edit', edit_genre_path, class:'btn btn-outline-primary mt-3' if current_user.role_id == 1%>
+        </div>
+    </div>
+</div>
+
