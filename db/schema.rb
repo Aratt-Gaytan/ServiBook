@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_14_184920) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_15_002408) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -54,12 +54,21 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_14_184920) do
     t.string "title"
     t.string "isbn"
     t.date "publication_year"
-    t.string "copies_available"
-    t.string "int"
+    t.integer "copies_available"
     t.integer "author_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "synopsis"
     t.index ["author_id"], name: "index_books_on_author_id"
+  end
+
+  create_table "books_genres", force: :cascade do |t|
+    t.integer "genre_id", null: false
+    t.integer "book_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_books_genres_on_book_id"
+    t.index ["genre_id"], name: "index_books_genres_on_genre_id"
   end
 
   create_table "ckeditor_assets", force: :cascade do |t|
@@ -71,15 +80,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_14_184920) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["type"], name: "index_ckeditor_assets_on_type"
-  end
-
-  create_table "generos_libros", force: :cascade do |t|
-    t.integer "genre_id", null: false
-    t.integer "book_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["book_id"], name: "index_generos_libros_on_book_id"
-    t.index ["genre_id"], name: "index_generos_libros_on_genre_id"
   end
 
   create_table "genres", force: :cascade do |t|
@@ -115,7 +115,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_14_184920) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "books", "authors"
-  add_foreign_key "generos_libros", "books"
-  add_foreign_key "generos_libros", "genres"
+  add_foreign_key "books_genres", "books"
+  add_foreign_key "books_genres", "genres"
   add_foreign_key "users", "roles"
 end

@@ -1,0 +1,136 @@
+
+<div class=" p-3">
+  <%= form_with model: @book do |form| %>
+    <div class="row text-center align-items-center ">
+      <div class="col-5">
+        <div class="input-group mb-3 ">
+          <%= form.file_field :photo, class: 'form-control', id:'photo_input'%>
+          <%= form.label :photo , class: "form-label", class: 'input-group-text' %>
+
+        </div>
+  
+      </div>
+      
+      <div class="col">
+        <strong>
+
+          <%= form.label 'Image: ' , class: "form-label"%>
+        </strong>
+
+        <div id="image_preview">
+           <% if @book.photo.attached? %>
+              <div>
+                <%= image_tag @book.photo, class: "img-thumbnail", width: '200px' %>
+              </div>
+            <% end %>
+        </div>
+     
+
+      </div>
+    </div>
+    <div class="row p-3">
+
+      <div class="col">
+          <strong>
+            <%= form.label :title, class: "form-label" %>
+          </strong>
+          
+
+            <p><br><%= form.text_field :title, placeholder: "Title", class: 'form-control' %></p>
+            
+        <strong>
+            <%= form.label :isbn, class: "form-label" %>
+        </strong>
+          
+
+        <p><br><%= form.text_field :isbn, placeholder: "ISBN", class: 'form-control' %></p>
+            
+        
+          
+      </div>
+
+      <div class="col">
+        <strong>
+          <%= form.label :publication_year, class: "form-label" %>
+        </strong>
+
+        <p><br><%= form.select :publication_year, options_for_select((1700..Date.current.year).to_a.reverse, @book.publication_year), { include_blank: 'Select Year' }, class: 'form-control' %></p>
+
+        <strong>
+            <%= form.label :copies_available, class: "form-label" %>
+        </strong>
+          
+
+        <p><br><%= form.number_field :copies_available, placeholder: "Copies", class: 'form-control' %></p>
+      </div>
+            <div class="col ">
+        <strong>
+            <%= form.label :author_id, "Autor" %>
+        </strong>
+        
+        <p><br>
+         
+            <%= form.collection_select :author_id, @authors, :id, :full_name ,  {}, { class: 'form-control' } %>
+        </p>
+ 
+
+           <div class="field">
+            <strong>
+
+              <%= form.label :genre_ids, "Géneros" %>
+            </strong>
+            <div class="checkbox-list">
+              <%= form.collection_check_boxes(:genre_ids, @genres, :id, :name) do |b| %>
+                <div class="checkbox">
+                  <%= b.check_box(class: 'form-check-input') %>
+                  <%= b.label(class: 'form-check-label') %>
+                </div>
+              <% end %>
+            </div>
+        </div>
+  
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col">
+        <strong>
+            <%= form.label :synopsis, "Synopsis" %>
+        </strong>
+        <%= form.text_area :synopsis,  class: "ckeditor form-control", rows: '5' , placeholder: 'Synopsis' %>
+      </div>
+    </div>
+    <div class="row pt-5">
+
+      <div class="col text-center">
+        <%= form.submit "Done" , class: "btn btn-dark mb-3" %>
+        
+      </div>
+    </div>
+
+
+  <% end %>
+</div>
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const photoInput = document.getElementById('photo_input');
+  const imagePreview = document.getElementById('image_preview');
+
+  photoInput.addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+      const imageUrl = event.target.result;
+      imagePreview.innerHTML = `<img src="${imageUrl}" class="img-thumbnail"  width='200px' />`;
+    };
+
+    reader.readAsDataURL(file);
+  });
+});
+</script>
