@@ -1,0 +1,156 @@
+<%= render 'shared/header_admin' if user_signed_in?  %>
+
+<%= stylesheet_link_tag 'auth' %>
+<%=  link_to 'Back', admin_users_path, class: 'btn btn-light m-3 bi bi-arrow-90deg-left text-dark  text-light' %>
+
+<div class="container-md d-flex justify-content-center rounded">
+  <div class="row">
+    <div class="col-12 text-center mt-3">
+      <%= image_tag "logo.png", alt: "My Logo", class: "logo", width: "100", height: "100" %>
+      <h2>Create User</h2>
+    </div>
+
+    <%= form_with(model: @user, local: true, url: admin_users_path) do |f| %>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <p><%= f.label :name, class: "form-label" %></p>
+            <p><%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-control" %></p>
+          </div>
+          
+          <div class="field">
+            <p><%= f.label :email, class: "form-label" %></p>
+            <p><%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %></p>
+          </div>
+          
+          <div class="field">
+            <p><%= f.label :password, class: "form-label" %></p>
+            <p><%= f.password_field :password, autocomplete: "new-password", class: "form-control" %></p>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="field">
+            <p><%= f.label :address, class: "form-label" %></p>
+            <p><%= f.text_field :address, autofocus: true, autocomplete: "address", class: "form-control" %></p>
+          </div>
+          
+          <div class="field">
+            <p><%= f.label :phone, class: "form-label" %></p>
+            <p><%= f.phone_field :phone, autofocus: true, autocomplete: "phone", class: "form-control" %></p>
+          </div>
+          
+          <div class="field">
+            <p><%= f.label :password_confirmation, class: "form-label" %></p>
+            <p><%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control"%></p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col">
+          <p><%= f.label :role, class: "form-label" %></p>
+          <%= f.collection_radio_buttons :role_id, @roles, :id, :name, include_hidden: false do |b| %>
+            <div class="form-check form-check-inline">
+              <%= b.radio_button(class: "form-check-input") %>
+              <%= b.label(class: "form-check-label") %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div id="passwordHelpInline" class="form-text bg-secondary rounded p-3" hidden=true></div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col text-center">
+          <div class="actions">
+            <%= f.submit "Done", id: "enable", disabled: true, class: "btn btn-dark mb-3", data: { turbo: false } %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const passwordField = document.querySelector('#user_password');
+    const enableButton = document.querySelector('#enable');
+    const passwordStrength = document.querySelector('#passwordHelpInline');
+    const passwordConfirmation = document.querySelector('#user_password_confirmation');
+
+    passwordField.addEventListener('input', function() {
+      const password = this.value;
+      const actions = [];
+
+      // Verificar la fortaleza de la contraseña
+      if (password.length < 8) {
+        actions.push("More than 8 characters.");
+      }
+      if (!/[A-Z]/.test(password)) {
+        actions.push('More than 1 uppercase.');
+      }
+      if (!/[a-z]/.test(password)) {
+        actions.push('More than 1 lowercase.');
+      }
+      if (!/[0-9]/.test(password)) {
+        actions.push('More than 1 number.');
+      }
+      if (!/[^a-zA-Z\d]/.test(password)) {
+        actions.push('More than 1 special character (not letters or numbers).');
+      }
+      // Validación para evitar números consecutivos
+      if (/(\d)\1\1|012|123|234|345|456|567|678|789|890|901|098|987|876|765|654|543|432|321|210|109/.test(password)) {
+        actions.push('No consecutive numbers.');
+      }
+
+      // Validación para evitar letras consecutivas
+      if (/(abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz|ABC|BCD|CDE|DEF|EFG|FGH|GHI|HIJ|IJK|JKL|KLM|LMN|MNO|NOP|OPQ|PQR|QRS|RST|STU|TUV|UVW|VWX|WXY|XYZ)/.test(password)) {
+        actions.push('No consecutive letters.');
+      }
+
+      if (checkPass(password, passwordConfirmation.value)) {
+        actions.push('Passwords must match.');
+      }
+
+      // Mostrar las acciones que faltan realizar en la contraseña
+      if (actions.length > 0) {
+        passwordStrength.hidden = false;
+        passwordStrength.innerHTML = actions.map(action => `<p class="text-danger">${action}</p>`).join('');
+        enableButton.disabled = true;
+      } else {
+        passwordStrength.hidden = true;
+        enableButton.disabled = false;
+        passwordStrength.innerHTML = '';
+      }
+    });
+
+    passwordConfirmation.addEventListener('input', function() {
+      const passwordConfirm = this.value;
+      const password = passwordField.value;
+      const actions = [];
+      if (checkPass(password, passwordConfirmation.value)) {
+        actions.push('Passwords must match.');
+      }
+
+      // Mostrar las acciones que faltan realizar en la contraseña
+      if (actions.length > 0) {
+        passwordStrength.hidden = false;
+        passwordStrength.innerHTML = actions.map(action => `<p class="text-danger">${action}</p>`).join('');
+        enableButton.disabled = true;
+      } else {
+        passwordStrength.hidden = true;
+        enableButton.disabled = false;
+        passwordStrength.innerHTML = '';
+      }
+    });
+
+    function checkPass(pass, confirmPass) {
+      return pass !== confirmPass;
+    }
+  });
+</script>

@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-
+  before_action :authenticate_user!
   before_action :set_book, only: [:show, :edit, :update]
 
 
@@ -23,8 +23,14 @@ class BooksController < ApplicationController
     @authors = Author.all
   end
 
-  def delete
+  def destroy
+    @book = Book.find(params[:id])
+
+    @book.destroy
+
+    redirect_to books_path
   end
+
 
   def create
     @book = Book.new(book_params)

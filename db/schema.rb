@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_15_002408) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_18_002355) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -82,11 +82,34 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_15_002408) do
     t.index ["type"], name: "index_ckeditor_assets_on_type"
   end
 
+  create_table "estatuses", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "genres", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "loans", force: :cascade do |t|
+    t.integer "book_id", null: false
+    t.integer "user_id", null: false
+    t.integer "status_id", null: false
+    t.date "loan_date", null: false
+    t.date "due_date", null: false
+    t.date "returned_date"
+    t.text "comments"
+    t.decimal "fine_amount", precision: 8, scale: 2, default: "0.0"
+    t.integer "extension_count", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_loans_on_book_id"
+    t.index ["status_id"], name: "index_loans_on_status_id"
+    t.index ["user_id"], name: "index_loans_on_user_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -117,5 +140,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_15_002408) do
   add_foreign_key "books", "authors"
   add_foreign_key "books_genres", "books"
   add_foreign_key "books_genres", "genres"
+  add_foreign_key "loans", "books"
+  add_foreign_key "loans", "statuses"
+  add_foreign_key "loans", "users"
   add_foreign_key "users", "roles"
 end

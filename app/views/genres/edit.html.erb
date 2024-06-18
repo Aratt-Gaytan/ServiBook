@@ -8,5 +8,5 @@
 
     <h3 class="text-center">Edit <%= "#{@genre.name} "%></h3>
 
-    <%= render 'shared/genres/form' if user_signed_in? && current_user.role_id == 1  %>
+    <%= render 'shared/genres/form' if user_signed_in? && current_user.role_id == 1 || 3  %>
 </div>
