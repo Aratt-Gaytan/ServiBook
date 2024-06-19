@@ -1,2 +1,46 @@
-<h1>Loans#new</h1>
-<p>Find me in app/views/loans/new.html.erb</p>
+<h1>New Loan</h1>
+
+<%= form_with(model: @loan, local: true) do |form| %>
+  <% if @loan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@loan.errors.count, "error") %> prohibited this loan from being saved:</h2>
+
+      <ul>
+        <% @loan.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :book_id %>
+    <%= form.collection_select :book_id, Book.all, :id, :title %>
+  </div>
+
+  <div>
+    <%= form.label :user_id %>
+    <%= form.collection_select :user_id, User.all, :id, :name %>
+  </div>
+
+  <div>
+    <%= form.label :loan_date %>
+    <%= form.date_field :loan_date %>
+  </div>
+
+  <div>
+    <%= form.label :due_date %>
+    <%= form.date_field :due_date %>
+  </div>
+
+  <div>
+    <%= form.label :comments %>
+    <%= form.text_area :comments %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<%= link_to 'Back', loans_path %>

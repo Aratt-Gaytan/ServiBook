@@ -8,4 +8,3 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 Author.create(first_name: 'Charles',last_name: 'Dickens', date_of_birth: '1812-2-7', nationality: 'United Kingdom')
-Status.create(name: 'cancelled')

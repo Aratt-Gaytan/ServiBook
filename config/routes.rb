@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  get 'loans/index'
-  get 'loans/show'
-  get 'loans/new'
+
 
 
   mount Ckeditor::Engine => '/ckeditor'
@@ -11,6 +9,11 @@ Rails.application.routes.draw do
   resources :authors
   resources :genres
   resources :books
+  resources :loans do
+    member do
+      get :cancel
+    end
+  end
   namespace :admin do
     resources :users
   end
