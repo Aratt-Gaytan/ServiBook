@@ -1,0 +1,56 @@
+<%= form_with(model: @loan, local: true) do |form| %>
+  <% if @loan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@loan.errors.count, "error") %> prohibited this loan from being saved:</h2>
+
+      <ul>
+        <% @loan.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :book_id %>
+    <%= form.collection_select :book_id, Book.all, :id, :title, {}, { id: 'book-select', class: 'form-control' } %>
+  </div>
+
+  <div>
+    <%= form.label :user_id %>
+    <%= form.collection_select :user_id, @user, :id, :name, {}, { id: 'user-select', class: 'form-control' } %>
+  </div>
+
+  <div>
+    <%= form.label :loan_date %>
+    <%= form.date_field :loan_date, value: Date.today, class: 'form-control' %>
+  </div>
+
+  <div>
+    <%= form.label :due_date %>
+    <%= form.date_field :due_date, class: 'form-control' %>
+  </div>
+
+  <div>
+    <%= form.label :comments %>
+        <%= form.text_area :comments,  class: "ckeditor form-control", rows: '5' , placeholder: 'Comments' %>
+
+  </div>
+
+  <div class="text-center mt-3">
+        <%= form.submit "Done" , class: "btn btn-dark mb-3" %>
+  </div>
+<% end %>
+
+<script>
+  $(document).ready(function() {
+    $('#book-select').select2({
+      placeholder: "Selecciona un libro",
+      allowClear: true
+    });
+    $('#user-select').select2({
+      placeholder: "Selecciona un usuario",
+      allowClear: true
+    });
+  });
+</script>

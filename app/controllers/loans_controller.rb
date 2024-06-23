@@ -1,5 +1,5 @@
 class LoansController < ApplicationController
-  before_action :set_loan, only: [:show, :cancel]
+  before_action :set_loan, only: [:show, :cancel, :acept, :return]
 
   # GET /loans
   def index
@@ -13,7 +13,28 @@ class LoansController < ApplicationController
   # GET /loans/new
   def new
     @loan = Loan.new
+    @user = User.where(role_id: '2')
+
   end
+
+  # PATCH /loans/:id/cancel
+  def acept
+    if @loan.acept_loan
+      redirect_to loans_path, notice: 'Loan was successfully canceled.'
+    else
+      render :show
+    end
+  end
+
+    # PATCH /loans/:id/cancel
+    def return
+      if @loan.return_loan
+        redirect_to loans_path, notice: 'Loan was successfully canceled.'
+      else
+        render :show
+      end
+    end
+
 
   # POST /loans
   def create

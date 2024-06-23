@@ -1,6 +1,14 @@
-<h1>Loans</h1>
+<%= render 'shared/header_admin' if user_signed_in?  %>
 
-<table>
+<%= link_to "New Loan", new_loan_path, class: 'btn btn-light m-3 bi  bi-plus-lg text-dark' if current_user.role_id == 1 || 3%>
+
+
+<div class="container p-4 mt-4">
+  <h1 class="text-center">Loans</h1>
+
+
+<div class="row">
+    <table class="table table-striped">
   <thead>
     <tr>
       <th>Book</th>
@@ -20,8 +28,10 @@
         <td><%= loan.due_date %></td>
         <td><%= loan.status.name %></td>
         <td>
-          <%= link_to 'Show', loan %>
-          <%= link_to 'Cancel Loan', cancel_loan_path(loan), method: 'put', form: { data: { turbo: true } } if loan.status.name == 'active' %>
+          <%= link_to 'Show', loan,class: 'btn btn-outline-info' %>
+          <%= link_to 'Cancel Loan', cancel_loan_path(loan), method: 'put',class: 'btn btn-outline-danger', form: { data: { turbo: true } } if loan.status.name == 'requested' || "active" %>
+          <%= link_to 'Acept Loan', acept_loan_path(loan) , method: 'put',class: 'btn btn-outline-danger', form: { data: { turbo: true } } if loan.status.name == 'requested' %>
+          <%= link_to 'Return Book', return_loan_path(loan) , method: 'put',class: 'btn btn-outline-danger', form: { data: { turbo: true } } if loan.status.name == 'active' %>
 
 
 
@@ -31,4 +41,6 @@
   </tbody>
 </table>
 
-<%= link_to 'New Loan', new_loan_path %>
+
+</div>
+</div>

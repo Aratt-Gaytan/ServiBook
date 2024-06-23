@@ -22,33 +22,56 @@
         </thead>
         <tbody>
 
-            <% @users.each do |user| %>
+            <% @users.each do |u| %>
                 <tr>
                     <td>
-                        <%= user.id%>
+                        <%= u.id%>
                     </td>
 
                     <td>
-                        <%= user.name%>
+                        <%= u.name%>
                     </td>
                     <td>
-                        <%= user.email%>
+                        <%= u.email%>
                     </td>
                     <td>
-                        <%= user.phone%>
+                        <%= u.phone%>
                     </td>
                     <td>
-                        <%= user.address%>
+                        <%= u.address%>
                     </td>
                     <td>
-                        <%= user.role.name%>
+                        <%= u.role.name%>
                     </td>
 
                     <td>
-                        <%= button_to 'Remove', admin_user_path(user), method: 'delete',class: 'btn btn-outline-danger', data: { confirm: 'Are you sure?' } if current_user.role_id == 1 || 3 %>
+
+                                                <!-- Modal -->
+                        <div class="modal fade" id="exampleModal<%=u.id%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure?</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                By deleting the account ALL YOUR DATA will be deleted
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <%= button_to 'Acept', admin_user_path(u), method: 'delete',class: 'btn btn-outline-danger', data: { confirm: 'Are you sure?' } if current_user.role_id == 1 || 3 %>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal<%=u.id%>">
+                        Delete
+                        </button>
+                      
                     </td>
                     <td>
-                        <%= link_to 'Edit', edit_admin_user_path(user), class:'btn btn-outline-primary ' if current_user.role_id == 1 || 3%>
+                        <%= link_to 'Edit', edit_admin_user_path(u), class:'btn btn-outline-primary ' if current_user.role_id == 1 || 3%>
                     </td>
 
                 </tr>
@@ -61,3 +84,6 @@
 
   </div>
 </div>
+
+
+

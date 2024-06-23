@@ -8,5 +8,7 @@
             "group": "hola",
             "database": "${workspaceFolder:servibook}/storage/development.sqlite3"
         }
-    ]
+    ],
+    "typescript.tsserver.nodePath": "C:\\Program Files\\nodejs",
+    "sqltools.disableNodeDetectNotifications": true
 }

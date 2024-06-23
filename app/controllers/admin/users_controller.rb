@@ -8,7 +8,7 @@ module Admin
     end
 
     def show
-      @user = User.includes(:role).find(params[:id])
+      @user = User.find(params[:id])
     end
 
     def new
@@ -22,8 +22,15 @@ module Admin
 
     def destroy
       @user = User.find(params[:id])
-      @user.destroy
-      redirect_to admin_users_path
+      puts "the id = #{@user.id}"
+      if @user.destroy
+        redirect_to admin_users_path, notice: 'El usuario fue eliminado exitosamente.'
+      else
+        redirect_to admin_users_path, alert: 'El usuario no se pudo eliminar, verifica que no sea administrador o tenga registros asociados.'
+      end
+    rescue ActiveRecord::InvalidForeignKey => e
+      puts e
+      redirect_to admin_users_path, alert: "El usuario no se pudo eliminar, verifica que no sea administrador o tenga registros asociados."
     end
 
     def create
@@ -53,10 +60,8 @@ module Admin
     end
 
     def user_params
-      # Permitir los parámetros obligatorios y opcionales
       permitted_params = [:name, :email, :address, :phone, :role_id]
 
-      # Agregar los campos de contraseña si se proporcionan valores
       if params[:user][:password].present?
         permitted_params << :password
         permitted_params << :password_confirmation
@@ -64,7 +69,5 @@ module Admin
 
       params.require(:user).permit(permitted_params)
     end
-
-
   end
 end

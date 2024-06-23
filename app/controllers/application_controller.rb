@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  config.force_ssl = true
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected

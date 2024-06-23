@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   resources :loans do
     member do
       get :cancel
+      get :acept
+      get :return
     end
   end
   namespace :admin do

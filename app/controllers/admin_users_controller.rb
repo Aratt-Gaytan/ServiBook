@@ -27,9 +27,12 @@ class AdminUsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
 
-    @user.destroy
+    if @user.destroy
+      redirect_to admin_users_path, notice: 'El usuario es administrador, no se puede eliminar.'
 
-    redirect_to admin_users_path
+    else
+      redirect_to admin_users_path, notice: 'El usuario fue eliminado correctamente.'
+    end
   end
 
   def create
