@@ -27,7 +27,80 @@
             <%= button_to 'Remove', book_path(@book), method: 'delete',class: 'btn btn-outline-danger', data: { confirm: 'Are you sure?' } if current_user.role_id == 1 || 3 %>
 
             <%= link_to 'Edit', edit_book_path, class:'btn btn-outline-primary mt-3' if current_user.role_id == 1 || 3%>
+            <%= link_to 'Request book', '#' , 
+            class: 'btn btn-success mt-3 text-light', 
+            data: { bs_toggle: 'modal', bs_target: '#ModalLoan' },
+            type: 'button' %>
+
         </div>
     </div>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="ModalLoan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+                
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Request 
+             <%= "#{@book.title}  " %> </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+                <%= form_with(model: @loan, url: loans_path, local: true, scope: :loan) do |form| %>
+
+            <div class="modal-body">
+
+
+            <div>
+                <%= form.label :book_id, {hidden: true} %>
+                <%= form.text_field :book_id, { id: 'book-select', class: 'form-control', value: @book.id, hidden: true} %>
+            </div>
+
+            <div>
+                <%= form.label :user_id, {hidden: true} %>
+                <%= form.text_field :user_id,  { id: 'user-select', class: 'form-control', value: current_user.id, hidden: true } %>
+            </div>
+
+            <div>
+                <%= form.label :loan_date %>
+                <%= form.date_field :loan_date, value: Date.today, class: 'form-control' %>
+            </div>
+
+            <div>
+                <%= form.label :due_date %>
+                <%= form.date_field :due_date, class: 'form-control' %>
+            </div>
+
+
+
+            <div class="text-center mt-3">
+                <%= form.text_field :comments,  { id: 'user-select', class: 'form-control', value: '-', hidden: true } %>
+            </div>
+
+
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        
+        <%= form.submit "Done" , class: "btn btn-dark " %>
+      </div>
+            <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#book-select').select2({
+    placeholder: "Selecciona un libro",
+    allowClear: true
+    });
+    $('#user-select').select2({
+    placeholder: "Selecciona un usuario",
+    allowClear: true
+    });
+});
+</script>

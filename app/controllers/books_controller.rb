@@ -10,6 +10,7 @@ class BooksController < ApplicationController
   def show
     @book = Book.includes(:author, :genre).find(params[:id])
 
+
   end
 
   def new

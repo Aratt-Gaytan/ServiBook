@@ -29,9 +29,9 @@
         <td><%= loan.status.name %></td>
         <td>
           <%= link_to 'Show', loan,class: 'btn btn-outline-info' %>
-          <%= link_to 'Cancel Loan', cancel_loan_path(loan), method: 'put',class: 'btn btn-outline-danger', form: { data: { turbo: true } } if loan.status.name == 'requested' || "active" %>
-          <%= link_to 'Acept Loan', acept_loan_path(loan) , method: 'put',class: 'btn btn-outline-danger', form: { data: { turbo: true } } if loan.status.name == 'requested' %>
-          <%= link_to 'Return Book', return_loan_path(loan) , method: 'put',class: 'btn btn-outline-danger', form: { data: { turbo: true } } if loan.status.name == 'active' %>
+          <%= link_to 'Cancel Loan', cancel_loan_path(loan), method: 'put',class: 'btn btn-outline-danger' if loan.status.name == 'requested' || loan.status.name == 'active' %>
+          <%= link_to 'Acept Loan', acept_loan_path(loan) , method: 'put',class: 'btn btn-outline-danger' if loan.status.name == 'requested' %>
+          <%= link_to 'Return Book', return_loan_path(loan) , method: 'put',class: 'btn btn-outline-danger' if loan.status.name == 'active' %>
 
 
 

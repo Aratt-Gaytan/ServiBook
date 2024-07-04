@@ -4,8 +4,8 @@
         {
             "previewLimit": 50,
             "driver": "SQLite",
-            "name": "hola",
-            "group": "hola",
+            "name": "Servibook",
+            "group": "Servibook",
             "database": "${workspaceFolder:servibook}/storage/development.sqlite3"
         }
     ],
