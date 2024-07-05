@@ -62,6 +62,11 @@
     <div class="row">
       <div class="col text-center">
         <div class="actions">
+          <p>
+
+              By clicking "Register" you agree to our <%= link_to 'privacy policy', "/privacy-policy" %>.
+          </p>
+          
           <%= f.submit "Sign up" , id: "enable" , disabled: true , class: "btn btn-dark mb-3" , data: { turbo: false }%>
 
           <%= render "devise/shared/links" %>
