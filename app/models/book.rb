@@ -7,7 +7,7 @@ class Book < ApplicationRecord
 
 
     # Method to acept a loan
-    def self.change_copies(copies)
+    def change_copies(copies)
 
       update(copies_available: copies)
     end

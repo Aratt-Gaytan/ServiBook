@@ -22,7 +22,7 @@ module Admin
 
     def destroy
       @user = User.find(params[:id])
-      puts "the id = #{@user.id}"
+
       if @user.destroy
         redirect_to admin_users_path, notice: 'El usuario fue eliminado exitosamente.'
       else

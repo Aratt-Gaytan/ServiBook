@@ -29,7 +29,7 @@
             </a>
             <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="/users/edit">Profile</a></li>
-            <li><%= link_to "Admin users", admin_users_path , class: "nav-link active" if current_user.role_id = 3%></li>
+            <li><%= link_to "Admin users", admin_users_path , class: "nav-link active" if current_user.role_id == 3%></li>
             <li><hr class="dropdown-divider"></li>
             <li><%= link_to "Sign out", destroy_user_session_path, method: :delete , class: "dropdown-item"%></li>
             </ul>

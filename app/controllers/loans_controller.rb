@@ -22,7 +22,7 @@ class LoansController < ApplicationController
   # PATCH /loans/:id/cancel
   def acept
     if @loan.acept_loan
-      redirect_to loans_path, notice: 'Loan was successfully canceled.'
+      redirect_to loans_path, notice: 'Loan was successfully acepted.'
     else
       render :show
     end
@@ -30,10 +30,10 @@ class LoansController < ApplicationController
 
     # PATCH /loans/:id/cancel
     def return
-      @book = Book.where(id: @loan.book_id)
+      @book = Book.find(@loan.book_id)
       if @loan.return_loan
 
-      @book.change_copies(@book[0].copies_available + 1)
+      @book.change_copies(@book.copies_available + 1)
 
         redirect_to loans_path, notice: 'Loan was successfully canceled.'
       else
@@ -44,18 +44,48 @@ class LoansController < ApplicationController
 
   # POST /loans
   def create
-    @user = User.where(id: current_user.id)
-    @book = Book.where(id: loan_params[:book_id])
+    @user = User.find(current_user.id)
+    @book = Book.find(loan_params[:book_id])
     @loan = Loan.add_loan(loan_params[:book_id], loan_params[:user_id], loan_params[:loan_date], loan_params[:due_date], loan_params[:comments])
 
+    servibook_mail = ServiBookMail.new
 
-    puts @user[0].id
+    msg = ''
+
+
+
     if @loan.save
-      @book.change_copies(@book[0].copies_available - 1)
-      if @user[0].role_id == 2
-        redirect_to book_path(loan_params[:book_id]), notice: 'Loan was successfully created.'
+      @book.change_copies(@book.copies_available - 1)
+
+
+      mail_content = {
+        name: @user.name,
+        book: @book.title,
+        address: @user.address,
+        start_date:  loan_params[:loan_date],
+        end_date: loan_params[:due_date],
+        email: @user.email,
+        loan: @loan.id
+
+      }
+
+
+      @response = servibook_mail.send_invoice(mail_content)
+
+      if @response.success?
+        msg = "Invoice sent to your email #{@user.email}"
       else
-        redirect_to @loan, notice: 'Loan was successfully created.'
+        error_message = @response.parsed_response['error'] || @response.parsed_response['message'] || @response.body
+        msg = "An error occurred: #{error_message}"
+      end
+
+
+
+
+      if @user.role_id == 2
+        redirect_to book_path(loan_params[:book_id]), notice: "Loan was successfully created. #{msg}"
+      else
+        redirect_to @loan, notice: "Loan was successfully created. #{msg}"
 
       end
 
