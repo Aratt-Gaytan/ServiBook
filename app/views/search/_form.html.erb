@@ -1,0 +1,9 @@
+<%= search_form_for(@query, url: search_path, method: :get, class: "d-flex ", role: "search") do |f| %>
+
+    <%= f.collection_select :author_id_eq, @authors, :id, :full_name ,  { prompt: "Author"}, { class: 'form-control w-25' } %>
+    <%= f.collection_select :genre_id_eq, @genres, :id, :name ,  { prompt: "Genre"}, { class: 'form-control w-25' } %>
+    <%= f.search_field :title_cont, placeholder: "Search...", class: "form-control me-2" %>
+
+
+    <%= f.submit "Search!", class: "btn btn-outline-success" %>
+<% end %>

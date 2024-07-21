@@ -9,8 +9,8 @@ class AuthorsController < ApplicationController
 
   def show
     @author = Author.find(params[:id])
+    @books = Book.where(author_id: params[:id] )
   end
-
 
 
   def new
@@ -31,7 +31,7 @@ class AuthorsController < ApplicationController
 
 
   def create
-    author = Author.create(author_params)
+    @author = Author.create(author_params)
 
     redirect_to authors_path
   end

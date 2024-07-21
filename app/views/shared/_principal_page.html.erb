@@ -1,16 +1,42 @@
-<div class="w-100" style="background-color: beige;">
-  <ul>Welcome
-    <li>Email: <%= current_user.email %></li>
-    <li>Name: <%= current_user.name %></li>
-    <li>Phone: <%= current_user.phone %></li>
-    <li>Address: <%= current_user.address %></li>
-    <% if current_user.role %>
-      <li>Role: <%= current_user.role.name %> (<%= current_user.inspect %>)</li>
-    <% else %>
-      <li>Role: No role assigned</li>
-    <% end %>
-  </ul> 
+<div class="container mt-5">
+  <div class="row">
+    <div class="column">
+      <div class="w-100" style="">
+       <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
 
-  <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+            <div class="carousel-item active" data-bs-interval="100000">
+              <%= image_tag 'carrousel_2.jpg' , class: "d-block w-100", width: "100", height: "500" %>
+            </div>
+            <div class="carousel-item active" data-bs-interval="100000">
+              <%= image_tag 'carrousel_3.jpg' , class: "d-block w-100", width: "100", height: "500" %>
+            </div>
+            <div class="carousel-item active" data-bs-interval="100000">
+              <%= image_tag 'carrousel_4.jpg' , class: "d-block w-100", width: "100", height: "500" %>
+            </div>
+            <div class="carousel-item active" data-bs-interval="100000">
+              <%= image_tag 'carrousel_5.jpg' , class: "d-block w-100", width: "100", height: "500" %>
+            </div>
+            <div class="carousel-item active" data-bs-interval="100000">
+              <%= image_tag 'carrousel_6.jpg' , class: "d-block w-100", width: "100", height: "500" %>
+            </div>
+
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+
+<%= render 'shared/lists/list_books' if user_signed_in?   %>
+
 

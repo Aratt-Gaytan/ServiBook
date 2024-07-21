@@ -25,3 +25,29 @@
     </div>
 </div>
 
+<div class="container p-4 mt-4">
+  <h1 class="text-center">Books of <%= @genre.name %></h1>
+  <div class="row">
+
+  <% @books.each do |book| %>
+    <div class="col-2 mb-3">
+      <div class="card " style="width: 155px;">
+          
+          <% if book.photo.attached? %>
+            <%= image_tag(book.photo,  class: 'card-img-top', height: "200px")  %>
+          <% else %>
+            <%= image_tag 'defaultBook.jpg', class: 'card-img-top' %>
+          <% end %>
+          
+        <div class="card-body">
+         <strong> <%= link_to "#{book.title} (#{book.author.first_name} #{book.author.last_name})", book_path(book) ,class: 'card-text' %></strong>
+
+        </div>
+      </div>
+    </div>
+    
+     
+  <% end %>
+
+  </div>
+</div>

@@ -44,7 +44,7 @@ class LoansController < ApplicationController
 
   # POST /loans
   def create
-    @user = User.find(current_user.id)
+    @user = User.find(loan_params[:user_id])
     @book = Book.find(loan_params[:book_id])
     @loan = Loan.add_loan(loan_params[:book_id], loan_params[:user_id], loan_params[:loan_date], loan_params[:due_date], loan_params[:comments])
 

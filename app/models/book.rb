@@ -12,5 +12,11 @@ class Book < ApplicationRecord
       update(copies_available: copies)
     end
 
+    def self.ransackable_attributes(auth_object = nil)
+      ["author_id",  "synopsis", "title"]
+    end
+    def self.ransackable_associations(auth_object = nil)
+      ["author", "genre"]
+    end
 
 end

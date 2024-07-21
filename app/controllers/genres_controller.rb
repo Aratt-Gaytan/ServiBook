@@ -9,6 +9,8 @@ class GenresController < ApplicationController
 
   def show
     @genre = Genre.find(params[:id])
+    @books = @genre.book
+
   end
 
 
@@ -31,7 +33,7 @@ class GenresController < ApplicationController
 
 
   def create
-    genre = Genre.create(genre_params)
+    @genre = Genre.create(genre_params)
 
     redirect_to genres_path
   end
