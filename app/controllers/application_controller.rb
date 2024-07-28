@@ -2,13 +2,19 @@ class ApplicationController < ActionController::Base
   config.force_ssl = true
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_query
+  before_action :get_quote
   protected
 
   def set_query
+
     @query = Book.ransack(params[:q])
     @authors = Author.all  # Optionally, fetch all genres for the dropdown menu
     @genres = Genre.all  # Optionally, fetch all genres for the dropdown menu
+  end
+  def get_quote
+    @quote = Zenquotes.get_quote  # Call getQuote with options passed
 
+    @html_quote = @quote[0]["h"]
 
 
   end

@@ -1,7 +1,10 @@
+require 'json'
+
 class HomeController < ApplicationController
   before_action :authenticate_user!
 
   def index
+
 
 
     @books = Book.limit(6)  # Retrieve only the first 6 books

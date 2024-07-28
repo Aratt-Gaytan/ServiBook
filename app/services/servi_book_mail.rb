@@ -14,7 +14,7 @@ class ServiBookMail
       headers: { 'Content-Type' => 'application/json' },
       body: body.to_json
     }
-    self.class.post("/invoice", options)
-
+    response = self.class.post("/invoice", options)
+    JSON.parse(response.body)
   end
 end
