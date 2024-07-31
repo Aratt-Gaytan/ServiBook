@@ -37,9 +37,15 @@ class AuthorsController < ApplicationController
   end
 
   def destroy
-    @author = Author.find(params[:id])
 
+
+    @author = Author.find(params[:id])
     @author.destroy
+    # if @author.book.empty?
+    #   flash[:notice] = "Author deleted successfully"
+    # else
+    #   flash[:alert] = "Cannot delete author with associated books"
+    # end
 
     redirect_to authors_path
   end

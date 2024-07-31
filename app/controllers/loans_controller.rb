@@ -2,6 +2,7 @@ class LoansController < ApplicationController
   before_action :set_loan, only: [:show, :cancel, :acept, :return]
   before_action :authenticate_user!
   before_action :check_user_role, only: [:cancel, :acept, :show]
+  before_action :check_user_role
 
   # GET /loans
   def index

@@ -7,6 +7,13 @@
             "name": "Servibook",
             "group": "Servibook",
             "database": "${workspaceFolder:servibook}/storage/development.sqlite3"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "ServibookTest",
+            "group": "Servibook",
+            "database": "${workspaceFolder:servibook}/storage/test.sqlite3"
         }
     ],
     "typescript.tsserver.nodePath": "C:\\Program Files\\nodejs",

@@ -30,7 +30,7 @@
             <%= link_to 'Request book', '#' , 
             class: 'btn btn-success mt-3 text-light', 
             data: { bs_toggle: 'modal', bs_target: '#ModalLoan' },
-            type: 'button' %>
+            type: 'button' if current_user.confirmed? %>
 
         </div>
     </div>

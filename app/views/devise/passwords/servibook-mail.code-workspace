@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../servibook-mail"
+		},
+		{
+			"path": "../../../.."
+		}
+	],
+	"settings": {
+		"sqltools.connections": [
+			{
+				"previewLimit": 50,
+				"driver": "SQLite",
+				"name": "servibook",
+				"database": "${workspaceFolder:servibook}/storage/development.sqlite3"
+			}
+		]
+	}
+}

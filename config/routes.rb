@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :authors
   resources :genres
   resources :books
+#  resources :confirmations
   resources :loans do
     member do
       get :cancel
@@ -20,6 +21,13 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users
   end
+
+  resources :users do
+    member do
+      get :confirm_email
+    end
+  end
+
 
 
   get "up" => "rails/health#show", as: :rails_health_check

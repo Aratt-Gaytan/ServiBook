@@ -1,6 +1,8 @@
 class BooksController < ApplicationController
   before_action :authenticate_user!
   before_action :set_book, only: [:show, :edit, :update]
+  before_action :check_confirmed
+
 
 
   def index

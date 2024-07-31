@@ -1,6 +1,6 @@
 <%= render 'shared/header_admin' if user_signed_in?  %>
 
-<%= link_to "New Author", new_author_path, class: 'btn btn-light m-3 bi  bi-plus-lg text-dark' if current_user.role_id == 3%>
+<%= link_to "New Author", new_author_path, class: 'btn btn-light m-3 bi  bi-plus-lg text-dark' if current_user.role_id == 3 || 2%>
 
 <div class="container p-4 mt-4">
   <h1 class="text-center">Authors</h1>

@@ -3,7 +3,10 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_query
   before_action :get_quote
+
+
   protected
+
 
   def set_query
 
@@ -25,6 +28,12 @@ class ApplicationController < ActionController::Base
   def check_user_role
     unless current_user.role_id == 1 || 3
       render file: "#{Rails.root}/public/422.html", status: :unprocessable_entity
+    end
+  end
+
+  def check_confirmed
+    unless current_user.confirmed?
+      redirect_to confirmations_path
     end
   end
 end

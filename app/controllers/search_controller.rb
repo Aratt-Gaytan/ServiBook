@@ -1,6 +1,7 @@
 class SearchController < ApplicationController
   before_action :authenticate_user!
 
+
   # GET /articles or /articles.json
   def index
     @query = Book.ransack(params[:q])

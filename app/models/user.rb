@@ -6,10 +6,14 @@ class User < ApplicationRecord
          :trackable, :confirmable, :timeoutable, timeout_in: 20.minutes
   belongs_to :role
 
-  protected
-  def confirmation_required?
-    false
+  def after_sign_in_path_for(resource)
+    if resource.confirmed?
+      super # Redirige al destino por defecto (configurado en Devise)
+    else
+      new_user_confirmation_path # Redirige a la página de confirmación
+    end
   end
-
+  validates :name, presence: true
+  validates :email, presence: true, uniqueness: true
 end
 # app/models/user.rb

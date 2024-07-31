@@ -1,17 +1,18 @@
 class CreateEstatuses < ActiveRecord::Migration[7.1]
   def change
-    create_table :estatuses do |t|
-      t.string :name
+    # create_table :statuses do |t|
+    #   t.string :name
 
-      t.timestamps
-    end
+    #   t.timestamps
+    # end
+
 
     # Seed initial statuses
     reversible do |dir|
       dir.up do
-        Estatus.create(name: 'activo')
-        Estatus.create(name: 'devuelto')
-        Estatus.create(name: 'atrasado')
+        Status.create(name: 'activo')
+        Status.create(name: 'devuelto')
+        Status.create(name: 'atrasado')
       end
     end
   end

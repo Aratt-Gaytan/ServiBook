@@ -4,6 +4,9 @@ class AdminUsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update]
 
 
+
+
+
   def index
     @users = User.includes(:role)
   end

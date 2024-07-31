@@ -1,9 +1,12 @@
+
+<% if !current_user.confirmed? %>
+<%= render 'shared/confirm_mail' if user_signed_in? %>
+
+<% else %>
 <%= stylesheet_link_tag 'home' %>
 
 
-<%= render 'shared/header_admin' if user_signed_in?  %>
-<%= render 'shared/principal_page' if user_signed_in?   %>
+<%= render 'shared/header_admin' if user_signed_in? %>
+<%= render 'shared/principal_page' if user_signed_in? %>
 
-
-
-
+<% end %>

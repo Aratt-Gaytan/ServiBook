@@ -1,25 +1,152 @@
-<h2>Change your password</h2>
+<div class="column">
+  <div class="row">
+    <div class="col">
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-  <%= f.hidden_field :reset_password_token %>
+      <h2>Change your password</h2>
 
-  <div class="field">
-    <p><%= f.label :password, "New password" %></p>
-    <% if @minimum_password_length %>
-      <p><em>(<%= @minimum_password_length %> characters minimum)</em></p>
-    <% end %>
-    <p><%= f.password_field :password, autofocus: true, autocomplete: "new-password" %></p>
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+        <%= f.hidden_field :reset_password_token %>
+
+        <div class="field">
+          <p><%= f.label :password, "New password" %></p>
+          <% if @minimum_password_length %>
+            <p><em>(<%= @minimum_password_length %> characters minimum)</em></p>
+          <% end %>
+          <p><%= f.password_field :password, autofocus: true, autocomplete: "new-password" %></p>
+        </div>
+
+        <div class="field">
+          <p><%= f.label :password_confirmation, "Confirm new password" %></p>
+          <p><%= f.password_field :password_confirmation, autocomplete: "new-password" %></p>
+        </div>
+        <div class="row">
+            <div class="col">
+              <div id="passwordHelpInline" class="form-text bg-secondary rounded p-3" hidden = true>
+
+                </div>
+            </div>
+          </div>
+        <div class="actions">
+          <%= f.submit "Change my password" %>
+        </div>
+      <% end %>
+
+      <%= render "devise/shared/links" %>
+
+    </div>
   </div>
+</div>
 
-  <div class="field">
-    <p><%= f.label :password_confirmation, "Confirm new password" %></p>
-    <p><%= f.password_field :password_confirmation, autocomplete: "new-password" %></p>
-  </div>
+<script>
 
-  <div class="actions">
-    <%= f.submit "Change my password" %>
-  </div>
-<% end %>
+/*
+  config.password_regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z\d]).+/
+  config.password_complexity = { message: "debe contener al menos una letra minúscula, una letra mayúscula, un número y un carácter especial (que no sea letra ni número)" }
 
-<%= render "devise/shared/links" %>
+  # Validación adicional para evitar números consecutivos y letras consecutivas
+  validate :password_no_consecutive_characters
+
+  private
+
+  def password_no_consecutive_characters
+    if password.match?(/(.)\1{2}/)
+      errors.add(:password, "no puede contener caracteres consecutivos repetidos")
+    elsif password.match?(/([a-zA-Z])\1{1}/)
+      errors.add(:password, "no puede contener letras consecutivas")
+    end
+  end
+
+*/
+  document.addEventListener('DOMContentLoaded', function() {
+    const passwordField = document.querySelector('#user_password');
+    const enablebutton = document.querySelector('#enable');
+    const passwordStrength = document.querySelector('#passwordHelpInline');
+    const passwordConfirmation = document.querySelector('#user_password_confirmation');
+
+    passwordField.addEventListener('input', function() {
+      const password = this.value;
+      const actions = [];
+
+      // Verificar la fortaleza de la contraseña
+      if (password.length < 8) {
+        actions.push("More than 8 charecters.");
+      }
+      if (!/[A-Z]/.test(password)) {
+        actions.push('More than 1 mayus.');
+      }
+      if (!/[a-z]/.test(password)) {
+        actions.push(' More than 1 minus.');
+      }
+      if (!/[0-9]/.test(password)) {
+        actions.push('More than 1 num.');
+      }
+      if (!/[^a-zA-Z\d]/.test(password)) {
+        actions.push('More than 1 special character (not letters or numbers).');
+      }
+      // Validación para evitar números consecutivos
+      if (/(\d)\1\1|012|123|234|345|456|567|678|789|890|901|098|987|876|765|654|543|432|321|210|109/.test(password)) {
+          actions.push('No consecutive numbers.');
+      }
+
+      // Validación para evitar letras consecutivas
+      if (/(abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz|ABC|BCD|CDE|DEF|EFG|FGH|GHI|HIJ|IJK|JKL|KLM|LMN|MNO|NOP|OPQ|PQR|QRS|RST|STU|TUV|UVW|VWX|WXY|XYZ)/.test(password)) {
+          actions.push('No consecutive letters.');
+      }
+
+      if (checkPass(password, passwordConfirmation.value)) {
+        actions.push('Passwords must match');
+      }
+
+      // Mostrar las acciones que faltan realizar en la contraseña
+      if (actions.length > 0) {
+         passwordStrength.hidden = false;
+
+        passwordStrength.innerHTML = actions.map(action => `<p class="text-danger">${action}</p>`).join('');
+
+        enablebutton.disabled = true;
+      }else {
+        passwordStrength.hidden = true;
+
+        enablebutton.disabled = false;
+        passwordStrength.innerHTML = '';
+      }
+    });
+
+     passwordConfirmation.addEventListener('input', function() {
+        const passwordConfirm = this.value;
+        const password = passwordField.value;
+        const actions = [];
+        if (checkPass(password, passwordConfirmation.value)) {
+          actions.push('Passwords must match');
+        }
+
+        // Mostrar las acciones que faltan realizar en la contraseña
+        if (actions.length > 0) {
+          passwordStrength.hidden = false;
+          
+          passwordStrength.innerHTML = actions.map(action => `<p class="text-danger">${action}</p>`).join('');
+        
+
+          //passwordStrength.innerHTML = actions.map(action => `<p class="text-danger">${action}</p>`).join('');
+          enablebutton.disabled = true;
+
+        } else {
+          passwordStrength.hidden = true;
+          enablebutton.disabled = false;
+          passwordStrength.innerHTML = '';
+        }
+     });
+
+    function checkPass(pass, confirmPass){
+      if (pass != confirmPass) {
+        console.log(`no ${pass} ${confirmPass}`);
+        return 1
+      }
+      else{
+        return 0
+      }
+    }
+
+  });
+</script>
