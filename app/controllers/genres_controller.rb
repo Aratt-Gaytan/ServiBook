@@ -1,5 +1,5 @@
 class GenresController < ApplicationController
-  before_action :find_one, only: [:show, :edit, :update, :destroy] # this allows to add  find_one in the beginning of the methods mentioned
+  before_action :find_one, only: [:show, :edit, :update, :destroy] # this allows to add  friendly.find_one in the beginning of the methods mentioned
   before_action :authenticate_user!
   before_action :check_user_role, only: [:edit, :update, :new]
   before_action :check_confirmed
@@ -10,7 +10,7 @@ class GenresController < ApplicationController
   end
 
   def show
-    @genre = Genre.find(params[:id])
+    @genre = Genre.friendly.find(params[:id])
     @books = @genre.book
 
   end
@@ -22,11 +22,11 @@ class GenresController < ApplicationController
   end
 
   def edit
-    @genre = Genre.find(params[:id])
+    @genre = Genre.friendly.find(params[:id])
   end
 
   def update
-    @genre = Genre.find(params[:id])
+    @genre = Genre.friendly.find(params[:id])
 
     @genre.update(genre_params)
 
@@ -41,7 +41,7 @@ class GenresController < ApplicationController
   end
 
   def destroy
-    @genre = Genre.find(params[:id])
+    @genre = Genre.friendly.find(params[:id])
 
     @genre.destroy
 
@@ -55,7 +55,7 @@ class GenresController < ApplicationController
   end
 
   def find_one
-    @genre = Genre.find(params[:id])
+    @genre = Genre.friendly.find(params[:id])
   end
 
 

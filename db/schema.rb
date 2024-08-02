@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_25_184834) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_01_163659) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -48,6 +48,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_25_184834) do
     t.datetime "updated_at", null: false
     t.string "biography"
     t.date "date_of_death"
+    t.string "slug"
+    t.index ["slug"], name: "index_authors_on_slug", unique: true
   end
 
   create_table "books", force: :cascade do |t|
@@ -59,7 +61,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_25_184834) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "synopsis"
+    t.string "slug"
     t.index ["author_id"], name: "index_books_on_author_id"
+    t.index ["slug"], name: "index_books_on_slug", unique: true
   end
 
   create_table "books_genres", force: :cascade do |t|
@@ -82,11 +86,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_25_184834) do
     t.index ["type"], name: "index_ckeditor_assets_on_type"
   end
 
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string "slug", null: false
+    t.integer "sluggable_id", null: false
+    t.string "sluggable_type", limit: 50
+    t.string "scope"
+    t.datetime "created_at"
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
+  end
+
   create_table "genres", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "slug"
+    t.index ["slug"], name: "index_genres_on_slug", unique: true
   end
 
   create_table "loans", force: :cascade do |t|
@@ -101,7 +118,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_25_184834) do
     t.integer "extension_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "slug"
     t.index ["book_id"], name: "index_loans_on_book_id"
+    t.index ["slug"], name: "index_loans_on_slug", unique: true
     t.index ["status_id"], name: "index_loans_on_status_id"
     t.index ["user_id"], name: "index_loans_on_user_id"
   end
@@ -110,12 +129,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_25_184834) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "slug"
+    t.index ["slug"], name: "index_roles_on_slug", unique: true
   end
 
   create_table "statuses", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "slug"
+    t.index ["slug"], name: "index_statuses_on_slug", unique: true
   end
 
 # Could not dump table "users" because of following StandardError

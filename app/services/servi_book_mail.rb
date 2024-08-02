@@ -3,7 +3,7 @@ require 'httparty'
 
 class ServiBookMail
   include HTTParty
-  base_uri 'https://standing-shiny-titanium.glitch.me'
+  base_uri 'https://fern-picturesque-wildcat.glitch.me/'
 
   def  initialize
 
@@ -15,6 +15,11 @@ class ServiBookMail
       body: body.to_json
     }
     response = self.class.post("/invoice", options)
-    JSON.parse(response.body)
+    return response
+
+
+
+
+
   end
 end

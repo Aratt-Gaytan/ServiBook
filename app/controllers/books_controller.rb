@@ -1,4 +1,6 @@
 class BooksController < ApplicationController
+
+
   before_action :authenticate_user!
   before_action :set_book, only: [:show, :edit, :update]
   before_action :check_confirmed
@@ -10,8 +12,9 @@ class BooksController < ApplicationController
   end
 
   def show
-    @book = Book.includes(:author, :genre).find(params[:id])
 
+    @book = Book.includes(:author, :genre).friendly.find(params[:id])
+    puts "copies: #{@book.copies_available}"
 
   end
 
@@ -27,7 +30,7 @@ class BooksController < ApplicationController
   end
 
   def destroy
-    @book = Book.find(params[:id])
+    @book = Book.friendly.find(params[:id])
 
     @book.destroy
 
@@ -58,7 +61,7 @@ class BooksController < ApplicationController
   private
 
   def set_book
-    @book = Book.find(params[:id])
+    @book = Book.friendly.find(params[:id])
   end
 
   def book_params

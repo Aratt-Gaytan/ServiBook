@@ -8,8 +8,10 @@ class AuthorsController < ApplicationController
   end
 
   def show
-    @author = Author.find(params[:id])
-    @books = Book.where(author_id: params[:id] )
+    @author = Author.friendly.find(params[:id])
+
+    puts "author: #{@author.id}"
+    @books = Book.friendly.where(author_id: @author.id)
   end
 
 
@@ -18,11 +20,11 @@ class AuthorsController < ApplicationController
   end
 
   def edit
-    @author = Author.find(params[:id])
+    @author = Author.friendly.find(params[:id])
   end
 
   def update
-    @author = Author.find(params[:id])
+    @author = Author.friendly.find(params[:id])
 
     @author.update(author_params)
 
@@ -39,7 +41,7 @@ class AuthorsController < ApplicationController
   def destroy
 
 
-    @author = Author.find(params[:id])
+    @author = Author.friendly.find(params[:id])
     @author.destroy
     # if @author.book.empty?
     #   flash[:notice] = "Author deleted successfully"
@@ -57,7 +59,7 @@ class AuthorsController < ApplicationController
   end
 
   def find_one
-    @author = Author.find(params[:id])
+    @author = Author.friendly.find(params[:id])
   end
 
 
