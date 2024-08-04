@@ -3,8 +3,6 @@ Rails.application.routes.draw do
 
 
 
-  mount Ckeditor::Engine => '/ckeditor'
-
   root 'home#index'
   devise_for :users
   resources :authors
