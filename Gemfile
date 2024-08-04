@@ -43,9 +43,8 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
-gem 'simple_form'
 
-gem 'ckeditor', github: 'galetahub/ckeditor'
+
 
 # Gemfile
 gem 'httparty'
