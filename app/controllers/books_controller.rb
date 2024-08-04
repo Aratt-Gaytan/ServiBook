@@ -39,12 +39,15 @@ class BooksController < ApplicationController
 
 
   def create
+    puts book_params
     @book = Book.new(book_params)
+
     if @book.save
-      redirect_to @book, notice: 'El libro fue creado exitosamente.'
+      redirect_to books_path , notice: 'El libro fue creado exitosamente.'
     else
       @genres = Genre.all
-      render :new
+      puts "Error: #{@book.errors.full_messages}"
+      render :new, notice: @book.errors.full_messages[0]
     end
   end
 

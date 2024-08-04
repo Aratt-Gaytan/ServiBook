@@ -9,7 +9,7 @@
             <% if @book.photo.attached? %>
                 <%= image_tag(@book.photo,  class: 'rounded', width: "200px")  %>
             <% else %>
-                <%= image_tag 'default.jpg', class: 'rounded', width: "200px" %>
+                <%= image_tag 'defaultBook.jpg', class: 'rounded', width: "200px" %>
             <% end %>
         </div>
         <div class="col-8 offset-1">

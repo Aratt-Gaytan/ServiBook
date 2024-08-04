@@ -33,7 +33,7 @@ class Book < ApplicationRecord
   validates :publication_year, presence: true
   validates :copies_available, presence: true
   validates :author_id, presence: true
-  validates :genre_ids, presence: true
+
   validates :synopsis, presence: true
 
 end
