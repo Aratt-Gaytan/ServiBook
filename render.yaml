@@ -1,6 +1,6 @@
 databases:
   - name: Servibook
-    databaseName: development
+    databaseName: "storage/development.sqlite3"
     user: Aratt-Gaytan
     plan: free
 
