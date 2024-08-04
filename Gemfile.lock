@@ -1,11 +1,4 @@
 GIT
-  remote: https://github.com/galetahub/ckeditor.git
-  revision: 8200ccdbf789669d154b800aab329db8f46aabdc
-  specs:
-    ckeditor (5.1.1)
-      orm_adapter (~> 0.5.0)
-
-GIT
   remote: https://github.com/heartcombo/devise.git
   revision: a259ff3c28912a27329727f4a3c2623d3f5cb6f2
   branch: main
@@ -264,9 +257,7 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    simple_form (5.3.1)
-      actionpack (>= 5.2)
-      activemodel (>= 5.2)
+
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
